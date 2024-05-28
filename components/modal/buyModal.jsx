@@ -1,15 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { useSelector, useDispatch} from "react-redux";
-import { buyModalHide } from "../../redux/counterSlice";
 import Image from "next/image";
 import { Web3Button } from "@thirdweb-dev/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { protocolFeesBigNumber } from "../../utils/constUtils";
 import { Divider } from "@nextui-org/react";
-import { ethers } from "ethers";
 import { Spinner } from "@nextui-org/spinner";
 
 const BuyModal = ({
@@ -30,8 +25,6 @@ const BuyModal = ({
   tokenData,
   isLoadingButton,
 }) => {
-  const { buyModal } = useSelector((state) => state.counter);
-  const dispatch = useDispatch();
   const [validate, setValidate] = useState(false);
 
   const handleTermService = (e) => {

@@ -4,37 +4,37 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import OfferTab from "./OfferTab";
 import Properties from "./Properties";
 import Activity_tab from "./Activity_tab";
-import Price_history from "./Price_history";
 import Link from "next/link";
 import { useChainId } from "@thirdweb-dev/react";
-import SDKProvider from "../../providers/SDKProvider";
 import SDKContext from "../../contexts/SDKContext";
 import Tippy from "@tippyjs/react";
 import {whiteListedAddress} from "../../utils/whiteListedAddress";
+import {useChainContext} from "../../contexts/hooks/useChainContext";
 
 
 const ItemsTabs = ({ contractAddress,  isUserOwner, initialCreator, isToken = true }) => {
   const { SDKChainId, getChainName } = useContext(SDKContext);
 
+  const {getChainExplorerPath} = useChainContext()
 
- 
+
   return (
     <>
       <div className="scrollbar-custom overflow-x-auto rounded-lg">
- 
-       
+
+
             {/* <!-- Details --> */}
             <div className="tab-pane fade" id="details" role="tabpanel" aria-labelledby="details-tab">
               <div className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 rounded-t-2lg rounded-b-2lg rounded-tl-none border bg-white p-6 md:p-10">
                 <div className="mb-2 flex items-center">
                   <span className="dark:text-jacarta-300 mr-2 min-w-[9rem]">Contract Address:</span>
-                  <Link href={`https://polygonscan.com/address/${contractAddress}`} target="_blank" rel="noopener noreferrer" className="text-accent">
+                  <Link href={`${getChainExplorerPath()}/address/${contractAddress}`} target="_blank" rel="noopener noreferrer" className="text-accent">
                     {contractAddress}
                   </Link>
                 </div>
                 <div className="mb-2 flex items-center">
                   <span className="dark:text-jacarta-300 mr-2 min-w-[9rem]">Contract Creator:</span>
-                  <Link href={`/manageSpaces/${initialCreator}`} target="_blank" rel="noopener noreferrer" className="text-accent">
+                  <Link href={`/manage/${initialCreator}`} target="_blank" rel="noopener noreferrer" className="text-accent">
                     {initialCreator}
                   </Link>
                 </div>
@@ -43,7 +43,7 @@ const ItemsTabs = ({ contractAddress,  isUserOwner, initialCreator, isToken = tr
                   <span className="dark:text-jacarta-300 mr-2 min-w-[9rem]">Owner:</span>
                   {isUserOwner ? (
                     <div>
-                      <Link href={`/manageSpaces/${isUserOwner}`} rel="noopener noreferrer" className="text-accent mr-2">
+                      <Link href={`/manage/${isUserOwner}`} rel="noopener noreferrer" className="text-accent mr-2">
                         {isUserOwner}
                       </Link>
                       {whiteListedAddress.includes(isUserOwner) && (
@@ -68,7 +68,7 @@ const ItemsTabs = ({ contractAddress,  isUserOwner, initialCreator, isToken = tr
                 </div>
               </div>
             </div>
-          
+
       </div>
     </>
   );

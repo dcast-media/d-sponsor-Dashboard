@@ -3,7 +3,7 @@ import { getContract } from "thirdweb";
 import marketplaceContractAbi from "./marketplace-contact-abi.json";
 import { client } from "../../data/services/client";
 import erc20ContractAbi from "./erc20-contract-abi.json";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+// import { ApolloClient, InMemoryCache } from "@apollo/client";
 import dsponsorNftAbi from "./dsponsor-nft-abi.json";
 
 export const marketplaceConfig = {
@@ -62,7 +62,7 @@ export const ERC20SymbolsAndDecimals = {
 };
 export const defaultChainId = 11155111;
 
-export const queryClient = new ApolloClient({
-  uri: marketplaceConfig[defaultChainId].marketplace_offer_gql_endpoint,
-  cache: new InMemoryCache(),
-});
+// export const queryClient = new ApolloClient({
+//   uri: marketplaceConfig[defaultChainId].marketplace_offer_gql_endpoint,
+//   cache: new InMemoryCache(),
+// });

@@ -15,7 +15,7 @@ import PreviewModal from "../../components/modal/previewModal";
 import "tippy.js/dist/tippy.css";
 import { ItemsTabs } from "../../components/component";
 import BuyModal from "../../components/modal/buyModal";
-import adminInstance from "../../utils/sdkProvider";
+// import adminInstance from "../../utils/sdkProvider";
 import { toast } from "react-toastify";
 import OfferSkeleton from "../../components/skeleton/offerSkeleton.jsx";
 import { Divider } from "@nextui-org/react";
@@ -24,7 +24,6 @@ import { protocolFees } from "../../utils/constUtils";
 
 import contractABI from "../../abi/dsponsorAdmin.json";
 
-import "react-toastify/dist/ReactToastify.css";
 import ModalHelper from "../../components/Helper/modalHelper.jsx";
 import ItemDetails from "../../components/item/ItemDetails";
 import stringToUint256 from "../../utils/stringToUnit256";
@@ -89,6 +88,8 @@ const TokenPageContainer = ({ offerId, tokenId, offer, listings }) => {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const stepsRef = useRef([]);
   const [numSteps, setNumSteps] = useState(2);
+
+  const { getCurrencyByAddress } = useChainContext()
 
   useEffect(() => {
     if (offerId && tokenId) {
@@ -168,7 +169,7 @@ const TokenPageContainer = ({ offerId, tokenId, offer, listings }) => {
     try {
       const currencyTokenObject = {};
       if (!decimalsContract && !symbolContract) {
-        const currencyToken = adminInstance.chain.getCurrencyByAddress(offerData.nftContract.prices[0].currency);
+        const currencyToken = getCurrencyByAddress(offerData.nftContract.prices[0].currency);
         currencyTokenObject.symbol = currencyToken.symbol;
         currencyTokenObject.decimals = currencyToken.decimals;
       } else {
@@ -427,14 +428,14 @@ const TokenPageContainer = ({ offerId, tokenId, offer, listings }) => {
     body: "Congratulations, you have proposed an ad.",
     subBody: 'The media still has the power to validate or reject ad assets. You can follow the ad validation in the "Owned Ad Spaces" section.',
     buttonTitle: "Manage Spaces",
-    hrefButton: `/manageSpaces/${address}`,
+    hrefButton: `/manage/${address}`,
   };
   const successFullBuyModal = {
     title: "Checkout",
     body: "Congratulations, you purchase this ad space.",
     subBody: "Check your ad space in your manage section to submit your ad.",
     buttonTitle: "Manage Spaces",
-    hrefButton: `/manageSpaces/${address}`,
+    hrefButton: `/manage/${address}`,
   };
   const statutAds = {
     pending: "🔍 Your ad is pending, wait the validation of the creator",

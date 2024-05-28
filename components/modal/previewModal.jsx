@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Web3Button } from "@thirdweb-dev/react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "@nextui-org/spinner";
 
 const PreviewModal = ({
@@ -31,7 +30,7 @@ const PreviewModal = ({
   buttonTitle,
   modalTitle,
   successFullUploadModal,
- 
+
   isLoadingButton,
 }) => {
 
@@ -57,11 +56,11 @@ const PreviewModal = ({
       ratioArray.push(stepWidth * (width / height));
       ratioArray.push(stepWidth);
     }
-    
+
     return ratioArray;
-  
+
   };
-  
+
   return (
     <div>
       <div className="modal-dialog max-h-[75vh] max-w-2xl">

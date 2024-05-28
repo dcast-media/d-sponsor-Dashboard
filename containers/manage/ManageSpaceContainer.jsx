@@ -6,12 +6,11 @@ import User_items from "../../components/user/User_items";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css"; // optional
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import Meta from "../../components/Meta";
-import { GetAllAdOffersFromUser } from "../../data/services/AdOffersService";
-import { GetAllTokenbyOfferForAUser } from "../../data/services/TokenOffersService";
 import { useAddress } from "@thirdweb-dev/react";
 
 import { fetchDataFromIPFS } from "../../data/services/ipfsService";
+import fetchAdsOffersForUser from "../../providers/ChainProvider/methods/fetchAdsOffersForUser";
+import fetchAllTokensOfferForUser from "../../providers/ChainProvider/methods/fetchAllTokensOfferForUser";
 
 const ManageSpaceContainer = ({address: userAddress}) => {
   const router = useRouter();
@@ -25,9 +24,10 @@ const ManageSpaceContainer = ({address: userAddress}) => {
   useEffect(() => {
     if (userAddress) {
       const fetchAdsOffers = async () => {
-        const offers = await GetAllAdOffersFromUser(userAddress);
-        const ownedAdProposals = await GetAllTokenbyOfferForAUser(userAddress);
-        console.log(ownedAdProposals);
+        const offers = await fetchAdsOffersForUser(userAddress);
+        // const ownedAdProposals = await GetAllTokenbyOfferForAUser(userAddress);
+        const ownedAdProposals = await fetchAllTokensOfferForUser(userAddress);
+        console.log({ownedAdProposals});
         const mappedOffers = [];
         for (const element of offers) {
           let isPending = false;
@@ -51,19 +51,18 @@ const ManageSpaceContainer = ({address: userAddress}) => {
         const mappedownedAdProposals = [];
 
         setCreatedData(mappedOffers);
-        
+
+
+        console.log({ownedAdProposals});
 
         for (const element of ownedAdProposals) {
           if (!element.nftContract?.adOffers[0]?.metadataURL) {
             continue;
           }
 
-          const IPFSLink = element.nftContract.adOffers[0].metadataURL;
-          const destructuredIPFSResult = await fetchDataFromIPFS(IPFSLink);
           const combinedData = {
             ...element,
-            ...(element.mint.tokenData ? { tokenData: element.mint.tokenData } : {}),
-            metadata: destructuredIPFSResult,
+            ...(element?.mint?.tokenData ? { tokenData: element.mint.tokenData } : {}),
           };
           mappedownedAdProposals.push(combinedData);
         }

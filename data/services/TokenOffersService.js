@@ -1,9 +1,9 @@
-import { execute } from "../../.graphclient";
-import { gql } from "@apollo/client";
+// import { execute } from "../../.graphclient";
+// import { gql } from "@apollo/client";
 
 export const GetTokenAdOffer = async (offerId, tokenId) => {
   // Requête pour récupérer tous les NewDSponsorNFTs
-  const GET_DATA = gql`
+  const GET_DATA = `
     query TokenOfferDetails($offerId: ID!, $tokenId: ID!) {
       # replace by the $offerId
       adOffers(where: { id: $offerId }) {
@@ -89,14 +89,15 @@ export const GetTokenAdOffer = async (offerId, tokenId) => {
     }
   `;
 
+  throw new Error("Not implemented yet");
   // Exécutez la requête pour obtenir tous les NFTs
-  const resultat = await execute(GET_DATA, { offerId: offerId, tokenId: tokenId});
+  // const resultat = await execute(GET_DATA, { offerId: offerId, tokenId: tokenId});
 
- return resultat?.data?.adOffers[0];
+ // return resultat?.data?.adOffers[0];
 };
 export const GetAdOffer = async (offerId) => {
   // Requête pour récupérer tous les NewDSponsorNFTs
-  const GET_DATA = gql`
+  const GET_DATA = `
     query TokenOfferDetails($offerId: ID!) {
       # replace by the $offerId
       adOffers(where: { id: $offerId }) {
@@ -179,27 +180,29 @@ export const GetAdOffer = async (offerId) => {
     }
   `;
 
+    throw new Error("Not implemented yet");
+
   // Exécutez la requête pour obtenir tous les NFTs
-  const resultat = await execute(GET_DATA, { offerId: offerId});
-    console.log(resultat);
-  return resultat?.data?.adOffers[0];
+  // const resultat = await execute(GET_DATA, { offerId: offerId});
+  //   console.log(resultat);
+  // return resultat?.data?.adOffers[0];
 };
 export const GetAllTokenbyOfferForAUser = async (ownerAddress) => {
-  
+
 const options = { method: "GET", headers: { accept: "application/json" } };
 let nftFilterIds;
  try {
    const response = await fetch(`https://eth-sepolia.g.alchemy.com/nft/v3/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}/getNFTsForOwner?owner=${ownerAddress}&withMetadata=true&pageSize=100`, options);
    const data = await response.json();
-  
+
 
   nftFilterIds = data.ownedNfts.map(({ contract: { address }, tokenId }) => `${address.toLowerCase()}-${tokenId}`);
-   
+
  } catch (err) {
-   console.error(err); 
+   console.error(err);
    return;
  }
-  const GET_DATA = gql`
+  const GET_DATA = `
     query AdSpacesOwnedByUser($ids: [ID!]) {
       tokens(where: { id_in: $ids }, first: 1000) {
         id
@@ -278,9 +281,11 @@ let nftFilterIds;
     }
   `;
 
-  // Exécutez la requête pour obtenir tous les NFTs
-  const resultat = await execute(GET_DATA, { ids: nftFilterIds });
+    throw new Error("Not implemented yet");
 
-  return resultat.data.tokens;
+    // Exécutez la requête pour obtenir tous les NFTs
+  // const resultat = await execute(GET_DATA, { ids: nftFilterIds });
+
+  // return resultat.data.tokens;
 };
 

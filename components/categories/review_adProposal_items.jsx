@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "tippy.js/dist/tippy.css";
-import { useDispatch, useSelector } from "react-redux";
-import { buyModalShow } from "../../redux/counterSlice";
-import Review_carousel from "../carousel/review_carousel";
 import {useChainContext} from "../../contexts/hooks/useChainContext";
+import {useAppContext} from "../../contexts/hooks/useAppContext";
 
 const Review_adProposal_items = () => {
   const {chainName} = useChainContext();
-  const { sortedtrendingCategoryItemData } = useSelector((state) => state.counter);
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const { sortedTrendingCategoryItemData } = useAppContext();
   const offerAddress = "0x17c923c242c3217bd27e8f402a3608c2c8689618c12723d585fa19d7657ff06a0c000000";
-
 
   return (
     <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
-      {sortedtrendingCategoryItemData.map((item) => {
+      {sortedTrendingCategoryItemData.map((item) => {
         const { id, image, title, price, maxToken, tokenId, ownerName, offerId, isAlreadyMinted } = item;
         const itemLink = image.split("/").slice(-1).toString().replace(".jpg", "").replace(".gif", "");
         return (

@@ -4,7 +4,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
 import "tippy.js/dist/tippy.css";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import MdKeyboardArrowRight from "../../components/icons/MdKeyboardArrowRight";
+import MdKeyboardArrowLeft from "../../components/icons/MdKeyboardArrowLeft";
 import Feature_collections_data from "../../data/Feature_collections_data";
 import Link from "next/link";
 

@@ -1,12 +1,11 @@
-export default async function fetchOfferToken(options) {
+export default async function fetchOffer(options) {
     const chainId = options?.chainId || '11155111';
+    const offerId = options?.offerId;
 
-    const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph/query`);
-    path.searchParams.append('method', 'raw');
-    path.searchParams.append('withMetadata', 'true');
-    path.searchParams.append('query', ` query TokenOfferDetails {
+    const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph`);
+    const query =  `query TokenOfferDetails {
       # replace by the $offerId
-      adOffers(where: { id: "${options.offerId.toString()}" }) {
+      adOffers(where: { id: "${offerId}" }) {
         # METADATA - if INVALID, ignore this listing
         # try to fetch metadataURL
         # if tokenData?.length
@@ -41,8 +40,7 @@ export default async function fetchOfferToken(options) {
           }
 
           # to replace by $tokenId
-          tokens(where: { tokenId: "${options.tokenId.toString()}" }) {
-            
+          tokens {
             tokenId
             mint {
               transactionHash # if = null => not minted yet, so it's available
@@ -58,7 +56,6 @@ export default async function fetchOfferToken(options) {
                 variants
               }
               acceptedProposal {
-                id
                 data
               }
               pendingProposal {
@@ -66,7 +63,6 @@ export default async function fetchOfferToken(options) {
                 data
               }
               rejectedProposal {
-                id
                 data
                 rejectReason
               }
@@ -86,10 +82,20 @@ export default async function fetchOfferToken(options) {
           }
         }
       }
-    }`);
+    }`;
 
+    const start = new Date();
     const response = await fetch(path,{
-        cache: 'force-cache'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({query})
     });
-    return response.json();
+    const json = await response.json();
+    console.info(` ✓ [Relayer] ${new Date().toISOString()} [FETCH]: offer details in ${new Date() - start}ms`);
+    const offer = json?.data?.adOffers?.[0];
+    return offer;
 }
+

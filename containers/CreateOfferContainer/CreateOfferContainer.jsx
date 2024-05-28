@@ -297,7 +297,7 @@ const CreateOfferContainer = () => {
         body: "Your offer has been created successfully",
         subBody: "❕❕ On your offer management page, you will find the integration code to copy/paste onto your platform.",
         buttonTitle: "Manage Spaces",
-        hrefButton: `/manageSpaces/${address}`,
+        hrefButton: `/manage/${address}`,
     };
 
     return (

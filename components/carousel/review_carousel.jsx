@@ -1,17 +1,11 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
 import "tippy.js/dist/tippy.css";
 import Link from "next/link";
-import Tippy from "@tippyjs/react";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { useEffect, useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Web3Button } from "@thirdweb-dev/react";
 import AddProposalRefusedModal from "../modal/adProposalRefusedModal";
 

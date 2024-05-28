@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { toUtf8Bytes, keccak256 } from "ethers/lib/utils";
 import {useChainContext} from "../../../../contexts/hooks/useChainContext";
-
+import keccak256 from "../../../../utils/keccak256";
 
 
 const Form = ({ offerId, onUrlChange }) => {
@@ -15,7 +14,7 @@ const Form = ({ offerId, onUrlChange }) => {
       .normalize("NFKD")
       .replace(/\p{Diacritic}/gu, "")
       .replace(/[^a-z0-9]/gi, "");
-    const bigInt = BigInt(keccak256(toUtf8Bytes(normalized)));
+    const bigInt = BigInt(keccak256(normalized));
     const url = `/${chainName}/offer/${offerId}/${bigInt}?tokenData=${searchTerm}`;
 
     onUrlChange(url, searchTerm);

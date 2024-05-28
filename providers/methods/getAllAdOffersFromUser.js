@@ -1,24 +1,29 @@
-export default async function fetchOffer(options) {
+export const getAllAdOffersFromUser = async (userAddress, options) => {
+    // Requête pour récupérer tous les NewDSponsorNFTs
+
     const chainId = options?.chainId || '11155111';
-    const offerId = options?.offerId;
 
     const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph/query`);
     path.searchParams.append('method', 'raw');
     path.searchParams.append('withMetadata', 'true');
-    path.searchParams.append('query', `query TokenOfferDetails {
-      # replace by the $offerId
-      adOffers(where: { id: "${offerId}" }) {
-        # METADATA - if INVALID, ignore this listing
-        # try to fetch metadataURL
-        # if tokenData?.length
-        #    if offerMetadata.offer.token_metadata.name exists => replace all {tokenData} by tokenData value
-        #    (same for offerMetadata.offer.token_metadata.description & offerMetadata.offer.token_metadata.image)
-        # NAME = offerMetadata.offer.token_metadata.name || offerMetadata.offer.name || "(Invalid name)"
-        # DESCRIPTION = offerMetadata.offer.token_metadata.description || offerMetadata.offer.description || "(Invalid description)"
-        # IMAGE = offerMetadata.offer.token_metadata.image || offerMetadata.offer.image || defaultImage (ex: d>sponsor logo)
+    path.searchParams.append('query', `query OffersManagedByUser {
+      adOffers(
+        where: {
+          and: [
+            {
+              # replace by the user address
+              admins_contains: [${userAddress}]
+            }
+          ]
+        }
+        first: 1000
+      ) {
+        # --> Fetch and parse https://github.com/dcast-media/dips/blob/dip-0002/antho31/dip-0002.md#example-schema-json
+        # to get creator & offer info  (you may have token_metadata info too)
+        # offer.name, offer.image, offer.description
+        # if token_metadata: token_metadata.name,
         metadataURL
-
-        initialCreator # from which address the offer has been created
+        id # offerId
         creationTimestamp # data (unix time)
         adParameters(where: { enable: true }) {
           enable
@@ -31,18 +36,17 @@ export default async function fetchOffer(options) {
 
         nftContract {
           id # DSponsorNFT smart contract address
-          maxSupply
-          allowList # defines if there is a token allowlist
-          royaltyBps # creator royalties (690 = 6.90%)
-          # default mint price
-          prices(where: { enabled: true }) {
+          prices {
             currency # ERC20 smart contract
             amount # wei, mind decimals() function to transform in human readable value !
             enabled
           }
+          tokens(
+            # you can paginate with this type or filtering
+            # where: { and: [{ tokenId_lte: "200" }, { tokenId_lte: "100" }]
 
-          # to replace by $tokenId
-          tokens {
+            orderBy: tokenId
+          ) {
             tokenId
             mint {
               transactionHash # if = null => not minted yet, so it's available
@@ -55,13 +59,11 @@ export default async function fetchOffer(options) {
               adParameter {
                 id
                 base
-                variants
               }
               acceptedProposal {
                 data
               }
               pendingProposal {
-                id
                 data
               }
               rejectedProposal {
@@ -84,10 +86,14 @@ export default async function fetchOffer(options) {
           }
         }
       }
-    }`);
+    }
+    `;
 
-    const response = await fetch(path,{
-        cache: 'force-cache'
+    const response = await fetch(path, {
+        cache: 'no-cache'
     });
-    return response.json();
-}
+    const resultat = await response.json();
+    return resultat?.data?.adOffers;
+};
+
+export default getAllAdOffersFromUser;

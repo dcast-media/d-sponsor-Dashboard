@@ -9,13 +9,13 @@ import { Divider } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useContract, useContractWrite, useContractRead, useAddress } from "@thirdweb-dev/react";
-import adminInstance from "../../utils/sdkProvider";
 import OfferSkeleton from "../../components/skeleton/offerSkeleton";
 import { contractABI } from "../../data/services/contract";
 import Form from "../../components/collections-wide/sidebar/collections/Form";
 import Validation from "../../components/offer-section/validation";
 import ModalHelper from "../../components/Helper/modalHelper";
 import {ItemsTabs} from "../../components/component";
+import {useChainContext} from "../../contexts/hooks/useChainContext";
 
 const OfferPageContainer = ({offerId, offer}) => {
     const router = useRouter();
@@ -39,6 +39,7 @@ const OfferPageContainer = ({offerId, offer}) => {
 
     const { data: bps } = useContractRead(DsponsorAdminContract, "feeBps");
     const maxBps = 10000;
+    const { getCurrencyByAddress } = useChainContext()
 
 
     useEffect(() => {
@@ -56,7 +57,7 @@ const OfferPageContainer = ({offerId, offer}) => {
         try {
             const currencyTokenObject = {};
             if (!decimalsContract && !symbolContract) {
-                const currencyToken = adminInstance.chain.getCurrencyByAddress(offerData.nftContract.prices[0].currency);
+                const currencyToken = getCurrencyByAddress(offerData.nftContract.prices[0].currency);
                 currencyTokenObject.symbol = currencyToken.symbol;
                 currencyTokenObject.decimals = currencyToken.decimals;
             } else {
@@ -157,7 +158,7 @@ const OfferPageContainer = ({offerId, offer}) => {
                             <div className="mb-3 flex">
                                 {/* <!-- Collection --> */}
                                 <div className="flex items-center">
-                                    <Link href={`/manageSpaces/${offerData?.initialCreator}`} className="text-accent mr-2 text-sm font-bold">
+                                    <Link href={`/manage/${offerData?.initialCreator}`} className="text-accent mr-2 text-sm font-bold">
                                         {offerData?.initialCreator}
                                     </Link>
                                 </div>

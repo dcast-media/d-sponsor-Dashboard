@@ -1,10 +1,9 @@
 export default async function fetchLastOffers(options) {
     const chainId = options?.chainId || '11155111';
 
-    const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph/query`);
-    path.searchParams.append('method', 'raw');
-    path.searchParams.append('withMetadata', 'true');
-    path.searchParams.append('query', `query Homepage_LastOffers {
+    const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph`);
+
+    const query = `query Homepage_LastOffers {
       adOffers(orderBy: creationTimestamp, orderDirection: desc, first: 20, where: { and: [{ disable: false }] }) {
         id # offerId
         # --> Fetch and parse https://github.com/dcast-media/dips/blob/dip-0002/antho31/dip-0002.md#example-schema-json
@@ -33,10 +32,18 @@ export default async function fetchLastOffers(options) {
           }
         }
       }
-    }`);
+    }`;
 
+    const start = new Date();
     const response = await fetch(path,{
-        cache: 'force-cache'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({query})
     });
-    return response.json();
+    console.info(` ✓ [Relayer] ${new Date().toISOString()} [FETCH]: last offers in ${new Date() - start}ms`);
+    const json = await response.json();
+    return json?.data?.adOffers ?? [];
 }

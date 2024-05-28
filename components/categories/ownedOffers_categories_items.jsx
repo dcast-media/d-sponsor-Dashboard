@@ -1,13 +1,13 @@
 'use client';
 import React, { useEffect, useState } from "react";
-import { tranding_category_filter } from "../../data/categories_data";
-import CategoryItem from "./categoryItem";
-import { trendingCategoryData } from "../../data/categories_data";
-import Tippy from "@tippyjs/react";
-import Recently_added_dropdown from "../dropdown/recently_added_dropdown";
-import { useSelector, useDispatch } from "react-redux";
-import { updateTrendingCategoryItemData } from "../../redux/counterSlice";
-import Review_adProposal_data from "./review_adProposal_items";
+// import { tranding_category_filter } from "../../data/categories_data";
+// import CategoryItem from "./categoryItem";
+// import { trendingCategoryData } from "../../data/categories_data";
+// import Tippy from "@tippyjs/react";
+// import Recently_added_dropdown from "../dropdown/recently_added_dropdown";
+// import { useSelector, useDispatch } from "react-redux";
+// import { updateTrendingCategoryItemData } from "../../redux/counterSlice";
+// import Review_adProposal_data from "./review_adProposal_items";
 import OfferItem from "../cards/offerItem";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,41 +16,41 @@ import {useChainContext} from "../../contexts/hooks/useChainContext";
 const OwnedOffers_categories_items = ({ data, isPendinAdsOnOffer, isOwner }) => {
   const {chainName} = useChainContext();
 
-  const [itemdata, setItemdata] = useState(trendingCategoryData);
-  const dispatch = useDispatch();
-  const { trendingCategorySorText } = useSelector((state) => state.counter);
-  const [filterVal, setFilterVal] = useState(0);
+  // const [itemdata, setItemdata] = useState(trendingCategoryData);
+  // const dispatch = useDispatch();
+  // const { trendingCategorySorText } = useSelector((state) => state.counter);
+  // const [filterVal, setFilterVal] = useState(0);
 
-  const handleFilter = (category) => {
-    if (category !== "all") {
-      setItemdata(trendingCategoryData.filter((item) => item.category === category));
-    } else {
-      setItemdata(trendingCategoryData);
-    }
-  };
+  // const handleFilter = (category) => {
+  //   if (category !== "all") {
+  //     setItemdata(trendingCategoryData.filter((item) => item.category === category));
+  //   } else {
+  //     setItemdata(trendingCategoryData);
+  //   }
+  // };
+  //
+  // const sortText = [
+  //   {
+  //     id: 1,
+  //     text: "Recently Added",
+  //   },
+  //   {
+  //     id: 2,
+  //     text: "Price: Low to High",
+  //   },
+  //   {
+  //     id: 3,
+  //     text: "Price: high to low",
+  //   },
+  //   {
+  //     id: 4,
+  //     text: "Auction Ending Soon",
+  //   },
+  // ];
 
-  const sortText = [
-    {
-      id: 1,
-      text: "Recently Added",
-    },
-    {
-      id: 2,
-      text: "Price: Low to High",
-    },
-    {
-      id: 3,
-      text: "Price: high to low",
-    },
-    {
-      id: 4,
-      text: "Auction Ending Soon",
-    },
-  ];
-
-  useEffect(() => {
-    dispatch(updateTrendingCategoryItemData(itemdata.slice(0, 8)));
-  }, [itemdata, dispatch]);
+  // useEffect(() => {
+  //   dispatch(updateTrendingCategoryItemData(itemdata.slice(0, 8)));
+  // }, [itemdata, dispatch]);
 
   if (!data) {
     return (

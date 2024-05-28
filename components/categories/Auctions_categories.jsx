@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import HeadLine from "../headLine";
 import Auctions_category_data from "../../data/auctions_category_data";
 import Tippy from "@tippyjs/react";
-
 import Auctions_dropdown from "../dropdown/Auctions_dropdown";
 import Link from "next/link";
-import { bidsModalShow } from "../../redux/counterSlice";
-import { useDispatch } from "react-redux";
 import "tippy.js/themes/light.css";
 import Image from "next/image";
 import auctions_category_data from "../../data/auctions_category_data";
 import Likes from "../likes";
+import {useAppContext} from "../../contexts/hooks/useAppContext";
 
 const Auctions_categories = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [data, setData] = useState(Auctions_category_data.slice(0, 8));
   const [loadMoreBtn, setLoadMoreBtn] = useState(true);
 
+  const { isBidModalOpen, setIsBidModalOpen } = useAppContext();
   const handleloadMore = () => {
     setData(auctions_category_data);
     setLoadMoreBtn(false);
@@ -104,7 +103,7 @@ const Auctions_categories = () => {
                           height={800}
                         />
                       </Link>
-                     
+
                     </figure>
                     <div className="mt-7 flex items-center justify-between">
                       <Link href={/item/ + itemLink}>
@@ -136,7 +135,7 @@ const Auctions_categories = () => {
                     <div className="mt-8 flex items-center justify-between">
                       <button
                         className="text-accent font-display text-sm font-semibold"
-                        onClick={() => dispatch(bidsModalShow())}
+                        onClick={() => setIsBidModalOpen(true)}
                       >
                         Place bid
                       </button>

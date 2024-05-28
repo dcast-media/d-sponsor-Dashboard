@@ -1,27 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {  useState, useRef } from "react";
 import { ownedAdProposals_categories_filter } from "../../data/categories_data";
-import CategoryItem from "./categoryItem";
-import { useAddress, darkTheme, useBalance, Web3Button, useTokenBalance, useContract, useContractRead, useContractWrite, useStorageUpload, useTokenDecimals, CheckoutWithCard, CheckoutWithEth } from "@thirdweb-dev/react";
+import { useContract, useContractWrite, useStorageUpload } from "@thirdweb-dev/react";
 import { trendingCategoryData } from "../../data/categories_data";
-import Tippy from "@tippyjs/react";
-import Recently_added_dropdown from "../dropdown/recently_added_dropdown";
 import styles from "../../styles/createPage/style.module.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { updateTrendingCategoryItemData } from "../../redux/counterSlice";
-import Review_adProposal_data from "./review_adProposal_items";
 import OfferItem from "../cards/offerItem";
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from "react-toastify";
 import SliderForm from "../sliderForm/sliderForm";
 import Step_1_Mint from "../sliderForm/PageMint/Step_1_Mint";
 import Step_2_Mint from "../sliderForm/PageMint/Step_2_Mint";
 import Step_3_Mint from "../sliderForm/PageMint/Step_3_Mint";
- import { uploadToIPFS } from "../../data/services/ipfsService";
  import contractABI from "../../abi/dsponsorAdmin.json";
 
 import PreviewModal from "../modal/previewModal";
-import { image } from "@nextui-org/react";
 import {useChainContext} from "../../contexts/hooks/useChainContext";
 
 const OwnedAdProposals_categories_items = ({ data, isOwner }) => {

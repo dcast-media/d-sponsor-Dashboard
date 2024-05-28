@@ -2,9 +2,9 @@ import { readContract, getContract, sendTransaction } from "thirdweb";
 import {
   erc20Contract,
   ERC20SymbolsAndDecimals,
-  queryClient,
+  // queryClient,
 } from "../../containers/MarketplaceContainer/marketplace.config.js";
-import { gql } from "@apollo/client";
+// import { gql } from "@apollo/client";
 import { fetchDataFromIPFS } from "../../data/services/ipfsService";
 
 //////////////////////////////////////////////////////////////////////////
@@ -80,9 +80,10 @@ const fetchAllMpListings = async () => {
   `;
 
   try {
-    const { data } = await queryClient.query({
-      query: GET_ALL_MP_LISTINGS_DATA,
-    });
+    // const { data } = await queryClient.query({
+    //   query: GET_ALL_MP_LISTINGS_DATA,
+    // });
+
     return data;
   } catch (error) {
     console.log("Error fetching all mp listings", error);

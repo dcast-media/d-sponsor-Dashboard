@@ -5,7 +5,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
 import "tippy.js/dist/tippy.css";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import MdKeyboardArrowRight from "../../components/icons/MdKeyboardArrowRight";
+import MdKeyboardArrowLeft from "../../components/icons/MdKeyboardArrowLeft";
 import OfferItem from "../cards/offerItem";
 import {useChainContext} from "../../contexts/hooks/useChainContext";
 

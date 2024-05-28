@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAddress, useSwitchChain, useContract, useContractWrite, Web3Button, useContractRead, useStorageUpload, useTokenDecimals, CheckoutWithCard, CheckoutWithEth } from "@thirdweb-dev/react";
-import adminInstance from "../../../utils/sdkProvider";
 import { FileUploader } from "react-drag-drop-files";
 import  ModalHelper  from "../../Helper/modalHelper";
+import {useChainContext} from "../../../contexts/hooks/useChainContext";
 
 const Step_4_Create = ({
   stepsRef,
@@ -28,10 +28,13 @@ const Step_4_Create = ({
   setTokenContract,
   setCustomTokenContract,
 }) => {
-  const USDCCurrency = adminInstance.chain.getCurrencyAddress("USDC");
-  const ETHCurrency = adminInstance.chain.getCurrencyAddress("ETH");
-  const WETHCurrency = adminInstance.chain.getCurrencyAddress("WETH");
-  const USDTCurrency = adminInstance.chain.getCurrencyAddress("USDT");
+
+  const { getCurrencyAddress } = useChainContext();
+
+  const USDCCurrency = getCurrencyAddress("USDC");
+  const ETHCurrency = getCurrencyAddress("ETH");
+  const WETHCurrency = getCurrencyAddress("WETH");
+  const USDTCurrency = getCurrencyAddress("USDT");
   const [selectedCurrencyContract, setSelectedCurrencyContract] = useState(USDCCurrency.contract);
   const { contract: tokenContractAsync } = useContract(selectedCurrencyContract, "token");
   const { data: symbolContractAsync } = useContractRead(tokenContractAsync, "symbol");
@@ -70,7 +73,7 @@ const Step_4_Create = ({
       setCustomTokenContract(tokenContractAsync);
     }
   };
- 
+
   const helperStartDate = {
     title: "Start date",
     body: "You are free to choose the start date for the offer's validity. By default, it will be today's date.",

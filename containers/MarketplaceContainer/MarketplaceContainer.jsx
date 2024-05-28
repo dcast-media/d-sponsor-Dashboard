@@ -3,11 +3,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import MarketplaceHeroSection from "../../components/marketplace/marketplace-hero/marketplace-hero";
 import MarketplaceListingSection from "../../components/marketplace/marketplace-listing-section/marketplace-listing-section";
-import { fetchRandomListingsForMarketplace, fetchAllMpListings} from "./services";
+// import { fetchRandomListingsForMarketplace, fetchAllMpListings} from "./services";
 import { defaultChainId } from "./marketplace.config";
 import Meta from "../../components/Meta";
 import {Hero } from "../../components/component";
 import HowItWorks from "../../components/explication/howItWorks";
+import fetchRandomListingsForMarketplace from "../../providers/ChainProvider/methods/fetchRandomListingsForMarketplace";
 
 export default function MarketplaceContainer() {
     const chainId = defaultChainId;

@@ -3,14 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Web3Button } from "@thirdweb-dev/react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 const AddProposalRefusedModal = ({ id, selectedItems, closeRefuseModal, handleCommentChange, handleItemSubmit, setRefusedAdModal, successFullRefuseModal }) => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [allCommentsOk, setAllCommentsOk] = useState(false);
 
   useEffect(() => {
      for (const item of selectedItems) {
-   
+
        if (item.reason.length < 3) {
          setAllCommentsOk(false);
        } else {
@@ -24,10 +23,10 @@ const AddProposalRefusedModal = ({ id, selectedItems, closeRefuseModal, handleCo
     const uniqueItems = selectedItems.filter((item) => {
       const alreadyExists = itemsMap.has(item.tokenId);
       if (!alreadyExists) {
-        itemsMap.set(item.tokenId, true); 
-        return true; 
+        itemsMap.set(item.tokenId, true);
+        return true;
       }
-      return false; 
+      return false;
     });
 
     setFilteredItems(uniqueItems);

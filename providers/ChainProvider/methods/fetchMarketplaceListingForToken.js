@@ -1,12 +1,10 @@
 export default async function fetchMarketplaceListingForToken(options) {
     const chainId = options?.chainId || '11155111';
     const tokenId = options?.tokenId || null;
-    const nftContractAddress = options?.offer.nftContract.id || null;
+    const nftContractAddress = options?.offer?.nftContract.id || null;
 
-    const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph/query`);
-    path.searchParams.append('method', 'raw');
-    path.searchParams.append('withMetadata', 'true');
-    path.searchParams.append('query', `query getMarketplaceListingsForToken {
+    const path = new URL(`https://relayer.dsponsor.com/api/${chainId}/graph`);
+    const query = `query getMarketplaceListingsForToken {
             marketplaceListings(
                 orderBy: id, orderDirection: desc
             where: {
@@ -73,10 +71,19 @@ export default async function fetchMarketplaceListingForToken(options) {
         
         
             }
-        }`);
+        }`
 
-    const response = await fetch(path, {
-        cache: 'force-cache'
+    const start = new Date();
+    const response = await fetch(path,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({query})
     });
-    return response.json();
+    console.info(` ✓ [Relayer] ${new Date().toISOString()} [FETCH]: last market listing for token in ${new Date() - start}ms`);
+    const json = await response.json();
+    const listings = json?.data?.marketplaceListings ?? [];
+    return listings;
 }

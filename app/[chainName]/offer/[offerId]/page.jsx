@@ -1,6 +1,6 @@
 import OfferPageContainer from "../../../../containers/OfferPageContainer/OfferPageContainer";
 import {headers} from "next/headers";
-import fetchOffer from "../../../../providers/methods/fetchOffer";
+import fetchOffer from "../../../../providers/ChainProvider/methods/fetchOffer";
 
 export async function generateMetadata({
                                            params,
@@ -12,8 +12,7 @@ export async function generateMetadata({
     const headersList = headers()
     const chainID= headersList.get('chainID')
 
-    const offerRequest = await fetchOffer({chainID,offerId})
-    const offer = offerRequest?.adOffers?.[0] || null
+    const offer = await fetchOffer({chainID,offerId})
 
     return {
         title: `${offer?.metadata?.offer?.name} || DSponsor | smarter monetization for your content`,
@@ -29,8 +28,7 @@ export default async function OfferPage({params}) {
     const headersList = headers()
     const chainID= headersList.get('chainID')
 
-    const offerRequest = await fetchOffer({chainID,offerId})
-    const offer = offerRequest?.adOffers?.[0] || null
+    const offer = await fetchOffer({chainID,offerId})
 
     return (
         <div className="pt-[5.5rem] lg:pt-24">
