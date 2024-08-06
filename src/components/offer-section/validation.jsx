@@ -8,6 +8,36 @@ import InfoIcon from "../informations/infoIcon";
 import { CheckIcon, ClockIcon, XIcon, History } from "lucide-react";
 import ProposalHistory from "../tables/ProposalHistory";
 
+/* 
+{
+  "adParameter": {
+    "id": "linkURL"
+  },
+  "status": "CURRENT_ACCEPTED",
+  "data": "https://binance.com",
+  "rejectReason": null,
+  "creationTimestamp": "1721115312",
+  "lastUpdateTimestamp": "1721117196"
+}
+*/
+function processAllProposals(proposals, id) {
+  console.log(proposals);
+  const groupedProposals = [];
+  for (const element of proposals) {
+    groupedProposals.push({
+      id: id,
+      type: element.adParameter.id,
+      creationTimestamp: element.creationTimestamp,
+      data: element.data,
+      lastUpdateTimestamp: element.lastUpdateTimestamp,
+      rejectReason: element.rejectReason,
+      status: element.status
+    });
+  }
+
+  return groupedProposals;
+}
+
 const Validation = ({
   chainId,
   offer,
@@ -37,6 +67,7 @@ const Validation = ({
   const [pendingProposalLength, setPendingProposalLength] = useState(0);
   const [aspectRatio, setAspectRatio] = useState(null);
   const [isRejecting, setIsRejecting] = useState(false);
+  const [historyProposals, setHistoryProposals] = useState([]);
 
   const tabItem = [
     {
@@ -67,7 +98,7 @@ const Validation = ({
     const groupedPendingAds = {};
     const groupedValidatedAds = {};
     const groupedRefusedAds = {};
-    const groupedHistoryAds = {};
+    const groupedHistoryProposals = [];
 
     function processProposal(token, element, groupedAds, statusKey) {
       if (element[statusKey] !== null) {
@@ -117,6 +148,7 @@ const Validation = ({
       }
     }
 
+    let index = 0;
     for (const token of offer.nftContract.tokens) {
       if (token.mint !== null) {
         for (const element of token.currentProposals) {
@@ -124,7 +156,12 @@ const Validation = ({
           processProposal(token, element, groupedValidatedAds, "acceptedProposal");
           processProposal(token, element, groupedRefusedAds, "rejectedProposal");
         }
+
+        processAllProposals(token.allProposals, index).forEach((proposal) => {
+          groupedHistoryProposals.push(proposal);
+        });
       }
+      index++;
     }
 
     let formattedPendingAds = Object.values(groupedPendingAds);
@@ -147,6 +184,7 @@ const Validation = ({
     setPendingProposalLength(formattedPendingAds.length);
     setValidatedProposalData(formattedValidatedAds);
     setRefusedProposalData(formattedRefusedAds);
+    setHistoryProposals(groupedHistoryProposals);
   }, [isTokenView, offer, offerId, itemTokenId, setPendingProposalData]);
 
   const handleItemSubmit = async (approuved = false) => {
@@ -305,7 +343,7 @@ const Validation = ({
         <TabPanel>
           <div className="container relative p-0 mb-12">
             {/* <!-- Filter --> */}
-            <ProposalHistory />
+            <ProposalHistory data={historyProposals} />
           </div>
         </TabPanel>
       </Tabs>

@@ -5,28 +5,28 @@ import renderPriceToHumanString from "../../providers/utils/renderPriceToHumanSt
 import formatLongAddress from "../../utils/formatLongAddress";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
-let data = [
-  {
-    id: 0,
-    type: "linkURL",
-    creationTimestamp: "1721115312",
-    data: "https://binance.com",
-    lastUpdateTimestamp: "1721117196",
-    rejectReason: null,
-    status: "CURRENT_ACCEPTED"
-  },
-  {
-    id: 0,
-    type: "imageURL-5:1",
-    creationTimestamp: "1721115312",
-    data: "https://6f375d41f2a33f1f08f6042a65d49ec9.ipfscdn.io/ipfs/bafybeihkthq6hnez2tfogymwnktkgnpbpbvreizpclhvzywyxkc6ukqa7u/",
-    lastUpdateTimestamp: "1721117196",
-    rejectReason: null,
-    status: "CURRENT_ACCEPTED"
-  }
-];
+// let data = [
+//   {
+//     id: 0,
+//     type: "linkURL",
+//     creationTimestamp: "1721115312",
+//     data: "https://binance.com",
+//     lastUpdateTimestamp: "1721117196",
+//     rejectReason: null,
+//     status: "CURRENT_ACCEPTED"
+//   },
+//   {
+//     id: 0,
+//     type: "imageURL-5:1",
+//     creationTimestamp: "1721115312",
+//     data: "https://6f375d41f2a33f1f08f6042a65d49ec9.ipfscdn.io/ipfs/bafybeihkthq6hnez2tfogymwnktkgnpbpbvreizpclhvzywyxkc6ukqa7u/",
+//     lastUpdateTimestamp: "1721117196",
+//     rejectReason: null,
+//     status: "CURRENT_ACCEPTED"
+//   }
+// ];
 
-const ProposalHistory = ({}) => {
+const ProposalHistory = ({ data }) => {
   return (
     <div className="mt-4 overflow-x-auto">
       <div className="w-full text-left min-w-[736px] border dark:border-primaryPink dark:border-opacity-10 dark:bg-primaryBlack dark:text-white rounded-2lg">
