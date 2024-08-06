@@ -34,6 +34,14 @@ function InnerProviders({ children }) {
 
   return (
     <ThirdwebProvider
+      sdkOptions={{
+        gasless: {
+          openzeppelin: {
+            relayerUrl:
+              "https://api.defender.openzeppelin.com/actions/60707c07-3e8b-49d6-8912-d529b39d5efa/runs/webhook/59ce7c60-9e0b-4c87-8910-a8b13e6f725e/TEBFAC5SvwbPxoYyYZQR5"
+          }
+        }
+      }}
       activeChain={chain}
       clientId="6f375d41f2a33f1f08f6042a65d49ec9"
       supportedChains={[Base, Ethereum, BaseSepoliaTestnet, Sepolia, Polygon]}
