@@ -5,7 +5,8 @@ import ReviewCarousel from "../carousel/review_carousel";
 import AddProposalRefusedModal from "../modal/adProposalRefusedModal";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import InfoIcon from "../informations/infoIcon";
-import { CheckIcon, ClockIcon, XIcon } from "lucide-react";
+import { CheckIcon, ClockIcon, XIcon, History } from "lucide-react";
+import ProposalHistory from "../tables/ProposalHistory";
 
 const Validation = ({
   chainId,
@@ -53,6 +54,11 @@ const Validation = ({
       id: 3,
       text: "Refused",
       icon: <XIcon className="w-4 h-4" />
+    },
+    {
+      id: 4,
+      text: "History",
+      icon: <History className="w-4 h-4" />
     }
   ];
   useEffect(() => {
@@ -61,6 +67,7 @@ const Validation = ({
     const groupedPendingAds = {};
     const groupedValidatedAds = {};
     const groupedRefusedAds = {};
+    const groupedHistoryAds = {};
 
     function processProposal(token, element, groupedAds, statusKey) {
       if (element[statusKey] !== null) {
@@ -204,7 +211,7 @@ const Validation = ({
     <>
       {/* <!-- Tabs Nav --> */}
       <Tabs className="tabs">
-        <TabList className="nav nav-tabs scrollbar-custom mb-12 flex items-center justify-start overflow-x-auto overflow-y-hidden border-b border-jacarta-100 pb-px dark:border-jacarta-800 md:justify-center">
+        <TabList className="flex items-center justify-start pb-px mb-12 overflow-x-auto overflow-y-hidden border-b nav nav-tabs scrollbar-custom border-jacarta-100 dark:border-jacarta-800 md:justify-center">
           {tabItem.map(({ id, text, icon }) => {
             return (
               <Tab className="nav-item" key={id} onClick={() => setItemActive(id)}>
@@ -219,7 +226,7 @@ const Validation = ({
                     isOwner &&
                     text === "Refused" && (
                       <InfoIcon text="You ad as been refused and you have no pending ad. Try to submit a new one.">
-                        <ExclamationCircleIcon className="h-5 w-5 text-red dark:text-red" />
+                        <ExclamationCircleIcon className="w-5 h-5 text-red dark:text-red" />
                       </InfoIcon>
                     )}
                   {mediaShouldValidateAnAd &&
@@ -227,11 +234,11 @@ const Validation = ({
                     isMedia &&
                     pendingProposalLength !== 0 && (
                       <InfoIcon text="You have at least one ad to validate or to refuse.">
-                        <ExclamationCircleIcon className="h-5 w-5 text-red dark:text-red" />
+                        <ExclamationCircleIcon className="w-5 h-5 text-red dark:text-red" />
                       </InfoIcon>
                     )}
                   {icon}
-                  <span className="font-display text-base font-medium ml-2">
+                  <span className="ml-2 text-base font-medium font-display">
                     <div className="flex items-center">
                       <span>
                         {text} (
@@ -254,7 +261,7 @@ const Validation = ({
 
         <div>
           <TabPanel>
-            <div className="container mb-12 relative p-0">
+            <div className="container relative p-0 mb-12">
               {/* <!-- Filter --> */}
               <ReviewCarousel
                 chainId={chainId}
@@ -280,7 +287,7 @@ const Validation = ({
         </div>
 
         <TabPanel>
-          <div className="container mb-12 relative p-0">
+          <div className="container relative p-0 mb-12">
             {/* <!-- Filter --> */}
             <ValidatedRefusedItems
               statut={true}
@@ -290,9 +297,15 @@ const Validation = ({
           </div>
         </TabPanel>
         <TabPanel>
-          <div className="container mb-12 relative p-0">
+          <div className="container relative p-0 mb-12">
             {/* <!-- Filter --> */}
             <ValidatedRefusedItems statut={false} proposalData={refusedProposalData} />
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="container relative p-0 mb-12">
+            {/* <!-- Filter --> */}
+            <ProposalHistory />
           </div>
         </TabPanel>
       </Tabs>
