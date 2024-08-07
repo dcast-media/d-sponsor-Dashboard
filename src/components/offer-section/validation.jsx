@@ -23,13 +23,20 @@ import ProposalHistory from "../tables/ProposalHistory";
 function processAllProposals(proposals) {
   const groupedProposals = [];
   for (const element of proposals) {
+    let cssAspectRatio = null;
+    if (element.status.startsWith("imageURL")) {
+      const sanitizedStatus = element.status.replace("-0", "");
+      const ratio = sanitizedStatus.split("-")[1];
+      cssAspectRatio = ratio?.replace(":", "/");
+    }
     groupedProposals.push({
       type: element.adParameter.id,
       creationTimestamp: element.creationTimestamp,
       data: element.data,
       lastUpdateTimestamp: element.lastUpdateTimestamp,
       rejectReason: element.rejectReason,
-      status: element.status
+      status: element.status,
+      cssAspectRatio: cssAspectRatio
     });
   }
 
