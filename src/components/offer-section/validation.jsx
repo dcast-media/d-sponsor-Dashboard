@@ -174,6 +174,7 @@ const Validation = ({
     let formattedPendingAds = Object.values(groupedPendingAds);
     let formattedValidatedAds = Object.values(groupedValidatedAds);
     let formattedRefusedAds = Object.values(groupedRefusedAds);
+    groupedHistoryProposals.sort((a, b) => b.creationTimestamp - a.creationTimestamp);
 
     if (isTokenView) {
       formattedPendingAds = formattedPendingAds.filter(
