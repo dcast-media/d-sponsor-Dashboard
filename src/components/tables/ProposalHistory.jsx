@@ -27,6 +27,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 // ];
 
 const ProposalHistory = ({ data }) => {
+  const containsMetadata = data.some((proposal) => proposal.metadata);
   return (
     <div className="mt-4 overflow-x-auto">
       <div className="w-full text-left min-w-[736px] border dark:border-primaryPink dark:border-opacity-10 dark:bg-primaryBlack dark:text-white rounded-2lg">
@@ -34,6 +35,11 @@ const ProposalHistory = ({ data }) => {
           <thead className="rounded-2lg">
             <tr className="text-base bg-jacarta-50 dark:bg-primaryPurple rounded-2lg">
               <th className="px-4 py-3 font-medium text-jacarta-100 dark:text-jacarta-100">Id</th>
+              {containsMetadata && (
+                <th className="px-4 py-3 font-medium text-jacarta-100 dark:text-jacarta-100">
+                  Metadata
+                </th>
+              )}
               <th className="px-4 py-3 font-medium text-jacarta-100 dark:text-jacarta-100">Type</th>
               <th className="px-4 py-3 font-medium text-jacarta-100 dark:text-jacarta-100">
                 Creation Timestamp
@@ -58,6 +64,11 @@ const ProposalHistory = ({ data }) => {
                   <td className="px-4 py-4 text-jacarta-100 dark:text-jacarta-100">
                     {proposal.id}
                   </td>
+                  {containsMetadata && (
+                    <td className="px-4 py-4 text-jacarta-100 dark:text-jacarta-100">
+                      {proposal.metadata || "-"}
+                    </td>
+                  )}
                   <td className="px-4 py-4 text-jacarta-100 dark:text-jacarta-100">
                     {proposal.type}
                   </td>

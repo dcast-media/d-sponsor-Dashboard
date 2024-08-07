@@ -20,12 +20,10 @@ import ProposalHistory from "../tables/ProposalHistory";
   "lastUpdateTimestamp": "1721117196"
 }
 */
-function processAllProposals(proposals, id) {
-  console.log(proposals);
+function processAllProposals(proposals) {
   const groupedProposals = [];
   for (const element of proposals) {
     groupedProposals.push({
-      id: id,
       type: element.adParameter.id,
       creationTimestamp: element.creationTimestamp,
       data: element.data,
@@ -148,8 +146,7 @@ const Validation = ({
       }
     }
 
-    let index = 0;
-    for (const token of offer.nftContract.tokens) {
+    for (const [i, token] of offer.nftContract.tokens.entries()) {
       if (token.mint !== null) {
         for (const element of token.currentProposals) {
           processProposal(token, element, groupedPendingAds, "pendingProposal");
@@ -157,11 +154,14 @@ const Validation = ({
           processProposal(token, element, groupedRefusedAds, "rejectedProposal");
         }
 
-        processAllProposals(token.allProposals, index).forEach((proposal) => {
-          groupedHistoryProposals.push(proposal);
+        processAllProposals(token.allProposals).forEach((proposal) => {
+          groupedHistoryProposals.push({
+            ...proposal,
+            metadata: token.mint.tokenData,
+            id: i
+          });
         });
       }
-      index++;
     }
 
     let formattedPendingAds = Object.values(groupedPendingAds);
@@ -286,7 +286,9 @@ const Validation = ({
                             ? validatedProposalData?.length
                             : text === "Refused"
                               ? refusedProposalData?.length
-                              : 0}
+                              : text === "History"
+                                ? historyProposals?.length
+                                : 0}
                         )
                       </span>
                     </div>
