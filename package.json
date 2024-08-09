@@ -26,6 +26,9 @@
     "@thirdweb-dev/react": "^4.4.31",
     "@thirdweb-dev/sdk": "^4.0.57",
     "@tippyjs/react": "^4.2.6",
+    "@types/node": "^22.1.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "clsx": "^2.1.1",
     "cookies-next": "^4.2.1",
     "ethers": "^5.7.2",
@@ -63,7 +66,7 @@
     "prettier-plugin-embed": "^0.4.15",
     "prettier-plugin-tailwindcss": "^0.6.1",
     "tailwindcss": "^3.1.3",
-    "typescript": "5.3.3",
+    "typescript": "^5.5.4",
     "vitest": "^1.6.0"
   },
   "overrides": {

@@ -1,9 +1,10 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
   scroll-behavior: smooth;
 }
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   .light body {
@@ -151,7 +152,7 @@ html {
   /* DM Sans Bold Italic */
   @font-face {
     font-family: "DM Sans";
-    src: url("../fonts/DM_Sans/DMSans-BoldItalic.ttf") format("truetype");
+    src: url("../../public/fonts/DM_Sans/DMSans-BoldItalic.ttf") format("truetype");
     font-weight: 700;
     font-display: swap;
     font-style: italic;
@@ -6073,8 +6074,8 @@ body {
 @font-face {
   font-family: "CalSans-SemiBold";
   src:
-    url("../fonts/CalSans-SemiBold.woff") format("woff"),
-    url("../fonts/CalSans-SemiBold.otf") format("opentype");
+    url("../../public/fonts/CalSans-SemiBold.woff") format("woff"),
+    url("../../public/fonts/CalSans-SemiBold.otf") format("opentype");
   font-weight: 600;
   font-display: swap;
   font-style: normal;
@@ -6083,7 +6084,7 @@ body {
 /* DM Sans Regular */
 @font-face {
   font-family: "DM Sans";
-  src: url("../fonts/DM_Sans/DMSans-Regular.ttf") format("truetype");
+  src: url("../../public/fonts/DM_Sans/DMSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-display: swap;
   font-style: normal;
@@ -6092,7 +6093,7 @@ body {
 /* DM Sans Italic */
 @font-face {
   font-family: "DM Sans";
-  src: url("../fonts/DM_Sans/DMSans-Italic.ttf") format("truetype");
+  src: url("../../public/fonts/DM_Sans/DMSans-Italic.ttf") format("truetype");
   font-weight: 400;
   font-display: swap;
   font-style: italic;
@@ -6101,7 +6102,7 @@ body {
 /* DM Sans Medium */
 @font-face {
   font-family: "DM Sans";
-  src: url("../fonts/DM_Sans/DMSans-Medium.ttf") format("truetype");
+  src: url("../../public/fonts/DM_Sans/DMSans-Medium.ttf") format("truetype");
   font-weight: 500;
   font-display: swap;
   font-style: normal;
@@ -6110,7 +6111,7 @@ body {
 /* DM Sans Bold */
 @font-face {
   font-family: "DM Sans";
-  src: url("../fonts/DM_Sans/DMSans-Bold.ttf") format("truetype");
+  src: url("../../public/fonts/DM_Sans/DMSans-Bold.ttf") format("truetype");
   font-weight: 700;
   font-display: swap;
   font-style: normal;
